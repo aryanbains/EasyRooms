@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
+import './Signup.css';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebaseConfig';
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard'); // Redirect to dashboard after login
+      await createUserWithEmailAndPassword(auth, email, password);
+      navigate('/dashboard'); // Redirect to dashboard after signup
     } catch (error) {
-      setError('Invalid credentials. Please try again.');
+      setError('Error creating account. Please try again.');
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div className="signup-container">
+      <h2>Signup</h2>
+      <form onSubmit={handleSignup}>
         <input
           type="email"
           placeholder="Email"
@@ -37,14 +38,14 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit">Signup</button>
         {error && <p className="error-message">{error}</p>}
       </form>
       <p>
-        Don’t have an account? <a href="/signup">Sign up</a>
+        Already have an account? <a href="/login">Login</a>
       </p>
     </div>
   );
 };
 
-export default Login;
+export default Signup;
