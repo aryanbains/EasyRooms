@@ -3,117 +3,128 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #4caf50;
-    padding: 10px 20px;
-    color: white;
-  }
-  
-  /* Logo */
-  .navbar-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  /* Navbar links */
-  .navbar-links {
-    display: flex;
-    align-items: center;
-  }
-  
-  /* User button and dropdown */
-  .navbar-user {
-    position: relative;
-  }
-  
-  .user-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 5px;
-  }
-  
-  .user-button:hover {
-    text-decoration: underline;
-  }
-  
-  /* Dropdown menu */
-  .dropdown-menu {
-    position: absolute;
-    top: 45px;
-    right: 0;
-    background-color: #333;
-    color: black;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #2a2a2a; /* Darker, modern color */
+    padding: 15px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif; /* Modern font */
+    position: sticky;
+    top: 0;
     z-index: 1000;
-  }
-  
-  .dropdown-menu button {
-    background: none;
-    border: none;
-    padding: 10px 20px;
+}
+
+/* Logo */
+.navbar-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
     cursor: pointer;
-    width: 100%;
-    text-align: left;
-  }
-  
-  .dropdown-menu button:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 1rem 2rem;
-    color: white;
-  }
-  
-  .nav-links {
+    transition: color 0.3s;
+}
+
+.navbar-logo:hover {
+    color: #ff6347;
+}
+
+/* Navbar links */
+.nav-links {
     list-style: none;
     display: flex;
     align-items: center;
-  }
-  
-  .nav-links li {
-    margin-left: 20px;
+    gap: 20px; /* Modern spacing */
+}
+
+.nav-links li {
     position: relative;
-  }
-  
-  .nav-links a {
+}
+
+.nav-links a {
     color: white;
     text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .nav-links a:hover {
-    color: #ff6347;
-  }
-  
-  /* Dropdown styling */
-  .dropdown-content {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-links a:hover {
+    background-color: #ff6347;
+    color: black;
+    transform: scale(1.1);
+}
+
+/* User button and dropdown */
+.navbar-user {
+    position: relative;
+}
+
+.user-button {
+    background: none;
+    border: 2px solid white;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 25px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.user-button:hover {
+    background-color: #ff6347;
+    color: black;
+    border-color: white;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: #1e1e1e;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    color: white;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.dropdown-menu button:hover {
+    background-color: #ff6347;
+    color: black;
+}
+
+/* Dropdown styling */
+.dropdown-content {
     display: none;
     position: absolute;
     top: 100%;
-    background-color: #35d257;
-    color: #333;
+    background-color: #ff6347;
+    color: white;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
     padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .dropdown-content button {
+    border-radius: 8px;
+}
+
+.dropdown-content button {
     background: none;
     border: none;
-    color: #333;
+    color: white;
     cursor: pointer;
-  }
-  
-  .dropdown:hover .dropdown-content {
+    font-weight: 500;
+}
+
+.dropdown:hover .dropdown-content {
     display: block;
-  }
-  
+}

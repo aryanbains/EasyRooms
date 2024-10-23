@@ -1,53 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import './Navbar.css';
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [user] = useAuthState(auth);
   const navigate = useNavigate();
 
-  // Listen to authentication state changes
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser); // Set the user if authenticated
-    });
-    return () => unsubscribe(); // Cleanup listener on unmount
-  }, []);
-
-  // Handle logout
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      navigate('/login'); // Redirect to login page after logout
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
+  const handleLogout = () => {
+    auth.signOut();
+    navigate('/login');
   };
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">My App</div>
-      <div className="navbar-links">
+      <h1 className="navbar-logo">EasyRooms</h1>
+      <ul className="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><Link to="/rooms">Rooms</Link></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
         {user ? (
-          <div className="navbar-user">
-            <button
-              className="user-button"
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-            >
-              {user.displayName || user.email}
-            </button>
-            {dropdownOpen && (
-              <div className="dropdown-menu">
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )}
-          </div>
+          <li className="navbar-user">
+            <button className="user-button">{user.displayName || 'User'}</button>
+            <div className="dropdown-menu">
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          </li>
         ) : (
-          <button onClick={() => navigate('/login')}>Login</button>
+          <>
+            <li><Link to="/login">Login</Link></li>
+            <li><Link to="/signup">Signup</Link></li>
+          </>
         )}
-      </div>
+      </ul>
     </nav>
   );
 };
