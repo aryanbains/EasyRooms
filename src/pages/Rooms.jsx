@@ -35,6 +35,7 @@ const Rooms = () => {
 
   return (
     <div className="rooms-container">
+
       <h2>Discover Rooms</h2>
       <form onSubmit={createRoom}>
         <input
