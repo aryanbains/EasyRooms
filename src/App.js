@@ -6,6 +6,8 @@ import Rooms from './pages/Rooms.jsx';
 import ChatRoom from './pages/ChatRoom.jsx';
 import HomePage from './pages/HomePage'; // Import HomePage
 import Admin from './pages/Admin.jsx';
+import ForgotPassword from './pages/ForgotPassword';
+
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
         <Route path="/rooms" element={<Rooms />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/room/:roomId" element={<ChatRoom />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
       </Routes>
     </Router>
   );
