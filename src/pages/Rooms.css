@@ -1,84 +1,92 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif; /* Modern font */
-  }
-  
-  .rooms-container {
-    max-width: 600px; /* Set a max width for the rooms container */
-    margin: 5rem auto; /* Center the container on the page */
-    padding: 2rem;
-    background: white; /* White background for the container */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Soft shadow effect */
-  }
-  
-  h2 {
-    text-align: center; /* Center the heading */
-    margin-bottom: 2rem; /* Space below the heading */
-    color: #333; /* Dark text color for contrast */
-    font-size: 2rem; /* Larger font size for the heading */
-  }
-  
-  form {
-    display: flex;
-    justify-content: center; /* Center the form elements */
-    margin-bottom: 2rem; /* Space below the form */
-  }
-  
-  input {
-    padding: 10px;
-    margin-right: 1rem; /* Space between input and button */
-    border: 2px solid #ddd; /* Light border around input */
-    border-radius: 5px; /* Rounded corners for input */
-    font-size: 1rem; /* Font size for input */
-    flex: 1; /* Make the input take available space */
-  }
-  
-  input:focus {
-    border-color: #ff6347; /* Change border color on focus */
-    outline: none; /* Remove outline */
-  }
-  
-  button {
-    padding: 10px 20px; /* Increase padding for better appearance */
-    background-color: #ff6347; /* Primary button color */
-    color: white; /* Text color for the button */
-    border: none; /* No border */
-    border-radius: 5px; /* Rounded corners for the button */
-    font-size: 1rem; /* Button font size */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
-  }
-  
-  button:hover {
-    background-color: #e5533d; /* Darker shade on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
-  }
-  
-  ul {
-    list-style: none; /* Remove default list styling */
-    padding: 0; /* Remove padding */
-  }
-  
-  li {
-    margin: 1rem 0; /* Space between list items */
-    font-size: 1.2rem; /* Increase font size for list items */
-    text-align: center; /* Center-align list items */
-  }
-  
-  a {
-    text-decoration: none; /* Remove underline from links */
-    color: #ff6347; /* Link color to match theme */
-    padding: 10px; /* Add padding for clickable area */
-    border: 2px solid transparent; /* Border for hover effect */
-    border-radius: 5px; /* Rounded corners for links */
-    transition: background-color 0.3s, border-color 0.3s; /* Smooth transitions */
-  }
-  
-  a:hover {
-    background-color: rgba(255, 99, 71, 0.1); /* Light background on hover */
-    border-color: #ff6347; /* Add border on hover */
-  }
-  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif; /* Modern font */
+}
+
+.rooms-container {
+  max-width: 800px; /* Increased max width for a better layout */
+  margin: 5rem auto; /* Center the container on the page */
+  padding: 2rem;
+  background: white; /* White background for the container */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Soft shadow effect */
+}
+
+h2 {
+  text-align: center; /* Center the heading */
+  margin-bottom: 2rem; /* Space below the heading */
+  color: #333; /* Dark text color for contrast */
+  font-size: 2rem; /* Larger font size for the heading */
+}
+
+.search-bar {
+  width: 100%; /* Full width for the search bar */
+  padding: 10px;
+  margin-bottom: 1rem; /* Space below the search bar */
+  border: 2px solid #ddd; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1rem; /* Font size for search bar */
+}
+
+form {
+  display: flex;
+  justify-content: center; /* Center the form elements */
+  margin-bottom: 2rem; /* Space below the form */
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin-right: 1rem; /* Space between input and button */
+  border: 2px solid #ddd; /* Light border around input */
+  border-radius: 5px; /* Rounded corners for input */
+  font-size: 1rem; /* Font size for input */
+  flex: 1; /* Make the input take available space */
+}
+
+input[type="text"]:focus {
+  border-color: #ff6347; /* Change border color on focus */
+  outline: none; /* Remove outline */
+}
+
+button {
+  padding: 10px 20px; /* Increase padding for better appearance */
+  background-color: #ff6347; /* Primary button color */
+  color: white; /* Text color for the button */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners for the button */
+  font-size: 1rem; /* Button font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+button:hover {
+  background-color: #e5533d; /* Darker shade on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+ul {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove padding */
+}
+
+li {
+  margin: 1rem 0; /* Space between list items */
+  font-size: 1.2rem; /* Increase font size for list items */
+  text-align: center; /* Center-align list items */
+}
+
+a {
+  text-decoration: none; /* Remove underline from links */
+  color: #ff6347; /* Link color to match theme */
+  padding: 10px; /* Add padding for clickable area */
+  border: 2px solid transparent; /* Border for hover effect */
+  border-radius: 5px; /* Rounded corners for links */
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transitions */
+}
+
+a:hover {
+  background-color: rgba(255, 99, 71, 0.1); /* Light background on hover */
+  border-color: #ff6347; /* Add border on hover */
+}
