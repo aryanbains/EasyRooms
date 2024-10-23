@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './ChatRoom.css';
 import { useParams } from 'react-router-dom';
 import FileUpload from './FileUpload';
 import { listAll, ref } from 'firebase/storage';

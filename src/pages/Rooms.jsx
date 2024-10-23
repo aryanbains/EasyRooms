@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Rooms.css';
 import { collection, addDoc, query, getDocs, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebaseConfig'; // Change 'firestore' to 'db'
 

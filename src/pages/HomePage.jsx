@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <nav className="navbar">
-        <div className="logo">ChatApp</div>
+        <div className="logo">EasyRooms</div>
         <ul className="nav-links">
           <li><a href="#features">Features</a></li>
           <li><a href="/rooms">Rooms</a></li>
@@ -15,7 +15,7 @@ const HomePage = () => {
         </ul>
       </nav>
       <header className="hero-section">
-        <h1>Welcome to ChatApp</h1>
+        <h1>Welcome to EasyRooms</h1>
         <p>Connect, share, and communicate with your friends effortlessly.</p>
         <a href="/signup" className="btn-primary">Get Started</a>
       </header>
@@ -41,7 +41,7 @@ const HomePage = () => {
         <p>We are a team of developers passionate about creating seamless communication experiences. Our mission is to connect people through technology.</p>
       </section>
       <footer className="footer">
-        <p>&copy; 2024 ChatApp. All rights reserved.</p>
+        <p>&copy; 2024 EasyRooms. All rights reserved.</p>
       </footer>
     </div>
   );
