@@ -3,6 +3,7 @@ import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 import { signOut, updatePassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
+import Navbar from './Navbar'; // Import the Navbar component
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -38,6 +39,8 @@ const Dashboard = () => {
 
   return (
     <div className={`dashboard-wrapper ${darkMode ? 'dark' : ''}`}>
+      <Navbar /> {/* Add the Navbar component here */}
+
       <header className="dashboard-header">
         <h2>Welcome, {auth.currentUser?.displayName || 'User'}</h2>
         <div className="header-buttons">
