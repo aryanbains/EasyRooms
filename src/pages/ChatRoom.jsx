@@ -139,16 +139,6 @@ const ChatRoom = () => {
           <img src={sendIcon} alt="Send" />
         </button>
       </form>
-      <div className="file-list">
-        <h3>Uploaded Files:</h3>
-        <ul>
-          {files.map((url, index) => (
-            <li key={index}>
-              <a href={url} target="_blank" rel="noopener noreferrer">File {index + 1}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 };
