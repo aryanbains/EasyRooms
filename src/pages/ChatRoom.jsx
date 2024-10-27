@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './ChatRoom.css';
 import { useParams } from 'react-router-dom';
-import FileUpload from './FileUpload';
-import { listAll, ref } from 'firebase/storage';
-import {
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  serverTimestamp,
-} from 'firebase/firestore';
-import { db, storage, auth } from '../firebaseConfig'; // Corrected imports
-import { uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from 'firebase/firestore';
+import { db, storage, auth } from '../firebaseConfig';
+import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
+import sendIcon from '../icons/send.svg'; // Import the send icon
+import attachIcon from '../icons/attach.svg'; // Import the attach icon
 
 const ChatRoom = () => {
   const { roomId } = useParams();
@@ -21,12 +14,23 @@ const ChatRoom = () => {
   const [newMessage, setNewMessage] = useState('');
   const [file, setFile] = useState(null);
   const [files, setFiles] = useState([]);
+  const [roomName, setRoomName] = useState('');
+
+  // Fetch room name
+  useEffect(() => {
+    const fetchRoomName = async () => {
+      const roomDoc = await getDoc(doc(db, 'rooms', roomId));
+      if (roomDoc.exists()) {
+        setRoomName(roomDoc.data().roomName);
+      }
+    };
+    fetchRoomName();
+  }, [roomId]);
 
   // Fetch and listen to messages in real-time
   useEffect(() => {
     const messagesRef = collection(db, `rooms/${roomId}/messages`);
     const q = query(messagesRef, orderBy('timestamp'));
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const messagesData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -48,7 +52,6 @@ const ChatRoom = () => {
       );
       setFiles(urls);
     };
-
     fetchFiles();
   }, [roomId]);
 
@@ -83,7 +86,7 @@ const ChatRoom = () => {
   return (
     <div className="chatroom-container">
       <header className="chatroom-header">
-        <h2>Chat Room</h2>
+        <h2>{roomName}</h2>
       </header>
       <div className="messages">
         {messages.map((msg) => (
@@ -113,8 +116,18 @@ const ChatRoom = () => {
           onChange={(e) => setNewMessage(e.target.value)}
           required
         />
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <button type="submit">Send</button>
+        <label htmlFor="file-input">
+          <img src={attachIcon} alt="Attach" style={{ cursor: 'pointer' }} />
+        </label>
+        <input
+          type="file"
+          id="file-input"
+          style={{ display: 'none' }}
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+        <button type="submit">
+          <img src={sendIcon} alt="Send" />
+        </button>
       </form>
       <div className="file-list">
         <h3>Uploaded Files:</h3>

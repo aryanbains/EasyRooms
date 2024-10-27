@@ -5,7 +5,7 @@
   max-width: 100%;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f7f7f7; /* Light background for contrast */
+  background-color: #f0f0f0; /* Light background for contrast */
 }
 
 .chatroom-header {
@@ -21,7 +21,6 @@
   border-radius: 4px;
   padding: 10px;
   margin-bottom: 20px;
-  max-height: 400px;
   background-color: #fff; /* Message background */
 }
 
@@ -31,21 +30,28 @@
 
 .message {
   display: flex;
-  align-items: center;
-  margin: 5px 0;
+  flex-direction: column;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 70%;
+  align-self: flex-start;
+  background-color: #e0e0e0;
 }
 
 .message.sent {
-  justify-content: flex-end; /* Align sent messages to the right */
+  align-self: flex-end;
+  background-color: #007bff; /* Bootstrap primary color */
+  color: #fff; /* White text for sent messages */
 }
 
 .message.received {
-  justify-content: flex-start; /* Align received messages to the left */
+  background-color: #e0e0e0;
 }
 
 .message strong {
-  color: #007bff; /* Bootstrap primary color */
-  margin-right: 5px;
+  color: inherit; /* Inherit color for both sent and received */
+  margin-bottom: 5px;
 }
 
 .file-preview {
@@ -82,6 +88,11 @@ form button {
   transition: background-color 0.3s;
 }
 
+form button img {
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+}
+
 form button:hover {
   background-color: #0056b3; /* Darken the button on hover */
 }
@@ -112,3 +123,24 @@ form button:hover {
 .file-list a:hover {
   text-decoration: underline;
 }
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .message {
+    max-width: 100%; /* Full width for mobile */
+  }
+
+  .messages {
+    max-height: 300px; /* Limit height on mobile */
+  }
+
+  form input[type="text"] {
+    margin-bottom: 10px; /* Space below the input on mobile */
+  }
+
+  form input[type="file"],
+  form button {
+    margin-bottom: 10px; /* Space below the file input and button on mobile */
+  }
+}
+
