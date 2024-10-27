@@ -15,6 +15,7 @@
 .navbar-logo {
     color: white;
 }
+
 /* Navbar links */
 .nav-links {
     list-style: none;
@@ -82,4 +83,40 @@
 .dropdown-menu button:hover {
     background-color: #ff6347;
     color: black;
+}
+
+/* Hamburger menu styles */
+.hamburger {
+    display: none; /* Hide by default */
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column; /* Stack links vertically */
+        position: absolute;
+        top: 70px; /* Position below the navbar */
+        left: 0;
+        right: 0;
+        background-color: #2a2a2a;
+        display: none; /* Hide by default */
+        padding: 15px 0;
+    }
+
+    .nav-links.expanded {
+        display: flex; /* Show when expanded */
+    }
+
+    .hamburger {
+        display: flex; /* Show on mobile */
+    }
 }
