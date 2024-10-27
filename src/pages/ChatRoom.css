@@ -12,7 +12,7 @@
   text-align: center;
   padding: 10px;
   background-color: #ffffff;
-  color: white;
+  color: black;
   font-size: 24px;
 }
 
@@ -51,6 +51,18 @@
 
 .message strong {
   margin-bottom: 5px;
+}
+
+.chat-image {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.chat-video {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 5px;
 }
 
 .message-input {

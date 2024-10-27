@@ -3,7 +3,7 @@ import './ChatRoom.css';
 import { useParams } from 'react-router-dom';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from 'firebase/firestore';
 import { db, storage, auth } from '../firebaseConfig';
-import { ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import sendIcon from '../icons/send.svg'; // Import the send icon
 import attachIcon from '../icons/attach.svg'; // Import the attach icon
@@ -13,7 +13,7 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [file, setFile] = useState(null);
-  const [files, setFiles] = useState([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [roomName, setRoomName] = useState('');
   const messagesEndRef = useRef(null);
 
@@ -43,26 +43,12 @@ const ChatRoom = () => {
       }));
       setMessages(messagesData);
     });
-
     return unsubscribe;
   }, [roomId]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  // Fetch uploaded files from Firebase Storage
-  useEffect(() => {
-    const fetchFiles = async () => {
-      const filesRef = ref(storage, `rooms/${roomId}/files/`);
-      const fileList = await listAll(filesRef);
-      const urls = await Promise.all(
-        fileList.items.map((item) => getDownloadURL(item))
-      );
-      setFiles(urls);
-    };
-    fetchFiles();
-  }, [roomId]);
 
   // Send a new message or file
   const sendMessage = async (e) => {
@@ -74,20 +60,50 @@ const ChatRoom = () => {
     }
 
     let fileUrl = '';
+    let fileType = '';
+
     if (file) {
       const storageRef = ref(storage, `chatFiles/${uuidv4()}_${file.name}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      fileUrl = await getDownloadURL(snapshot.ref);
-      setFile(null);
-    }
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    const messagesRef = collection(db, `rooms/${roomId}/messages`);
-    await addDoc(messagesRef, {
-      sender: user.uid, // Store the user ID
-      username: user.displayName || 'User', // Use displayName from Firebase auth
-      content: fileUrl ? `File: ${fileUrl}` : newMessage,
-      timestamp: serverTimestamp(),
-    });
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+          const progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(2);
+          setUploadProgress(progress);
+          console.log('Upload is ' + progress + '% done');
+        }, 
+        (error) => {
+          console.log('Upload error: ', error);
+        }, 
+        async () => {
+          // Upload completed successfully, now we can get the download URL
+          fileUrl = await getDownloadURL(uploadTask.snapshot.ref);
+          fileType = file.type.startsWith('image') ? 'image' : file.type.startsWith('video') ? 'video' : 'file';
+
+          const messagesRef = collection(db, `rooms/${roomId}/messages`);
+          await addDoc(messagesRef, {
+            sender: user.uid, // Store the user ID
+            username: user.displayName || 'User', // Use displayName from Firebase auth
+            content: fileUrl,
+            fileType: fileType,
+            timestamp: serverTimestamp(),
+          });
+
+          setFile(null);
+          setUploadProgress(0);
+        }
+      );
+    } else {
+      const messagesRef = collection(db, `rooms/${roomId}/messages`);
+      await addDoc(messagesRef, {
+        sender: user.uid, // Store the user ID
+        username: user.displayName || 'User', // Use displayName from Firebase auth
+        content: newMessage,
+        fileType: 'text',
+        timestamp: serverTimestamp(),
+      });
+    }
 
     setNewMessage('');
   };
@@ -101,16 +117,17 @@ const ChatRoom = () => {
         {messages.map((msg) => (
           <div key={msg.id} className={`message ${msg.sender === auth.currentUser.uid ? 'sent' : 'received'}`}>
             <strong>{msg.username || 'User'}</strong>:
-            {msg.content.startsWith('File: ') ? (
-              <div className="file-preview">
-                <a
-                  href={msg.content.replace('File: ', '')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View File
-                </a>
-              </div>
+            {msg.fileType === 'image' ? (
+              <img src={msg.content} alt="sent" className="chat-image" />
+            ) : msg.fileType === 'video' ? (
+              <video controls className="chat-video">
+                <source src={msg.content} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            ) : msg.fileType === 'file' ? (
+              <a href={msg.content} target="_blank" rel="noopener noreferrer">
+                View File
+              </a>
             ) : (
               msg.content
             )}
@@ -124,7 +141,6 @@ const ChatRoom = () => {
           placeholder="Type a message"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          required
         />
         <label htmlFor="file-input">
           <img src={attachIcon} alt="Attach" style={{ cursor: 'pointer' }} />
@@ -135,6 +151,7 @@ const ChatRoom = () => {
           style={{ display: 'none' }}
           onChange={(e) => setFile(e.target.files[0])}
         />
+        {file && <div>Uploading: {uploadProgress}%</div>}
         <button type="submit">
           <img src={sendIcon} alt="Send" />
         </button>
