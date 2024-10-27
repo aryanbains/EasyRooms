@@ -1,30 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import './Profile.css';
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { auth, firebaseConfig } from '../firebaseConfig';
-import { RecaptchaVerifier, signInWithPhoneNumber, updateProfile } from 'firebase/auth';
+import { auth } from "../firebaseConfig"; // Ensure this is the correct import
+import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 
 const Profile = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [verificationCode, setVerificationCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
   const [verificationId, setVerificationId] = useState(null);
-  const [verificationStatus, setVerificationStatus] = useState('');
-  const [countryCode, setCountryCode] = useState('+1'); // Default country code
-  
-  // Initialize Recaptcha
-  const setupRecaptcha = () => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        'recaptcha-container',
-        { size: 'invisible' },
-        auth
-      );
-    }
-  };
+  const [message, setMessage] = useState("");
 
-  // Check if the user is logged in
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       if (!currentUser) {
@@ -33,83 +19,61 @@ const Profile = () => {
         setUser(currentUser); // Set user details
       }
     });
-
     return () => unsubscribe(); // Cleanup listener
   }, [navigate]);
 
-  // Send SMS Verification
-  const handleSendSMS = async (e) => {
-    e.preventDefault();
-    try {
-      setupRecaptcha();
-      const fullPhoneNumber = `${countryCode}${phoneNumber}`;
-      const confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, window.recaptchaVerifier);
-      setVerificationId(confirmationResult.verificationId);
-      setVerificationStatus('Verification code sent!');
-    } catch (error) {
-      console.error('Error sending SMS:', error);
-      setVerificationStatus('Failed to send SMS. Please try again.');
-    }
+  const requestOTP = () => {
+    const recaptchaVerifier = new RecaptchaVerifier("recaptcha-container", { size: "invisible" }, auth);
+
+    signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
+      .then((confirmationResult) => {
+        setVerificationId(confirmationResult.verificationId); // Save the verification ID
+        setMessage("OTP sent. Please check your phone.");
+      })
+      .catch((error) => {
+        setMessage(`Failed to send OTP: ${error.message}`);
+      });
   };
 
-  // Verify Code and Link Phone Number
-  const handleVerifyCode = async (e) => {
-    e.preventDefault();
-    try {
-      const credential = auth.PhoneAuthProvider.credential(verificationId, verificationCode);
-      await auth.currentUser.linkWithCredential(credential); // Link phone number with user
-      await updateProfile(auth.currentUser, { phoneNumber: `${countryCode}${phoneNumber}` });
-      setVerificationStatus('Phone number verified and linked successfully!');
-    } catch (error) {
-      console.error('Error verifying code:', error);
-      setVerificationStatus('Invalid code. Please try again.');
+  const verifyOTP = () => {
+    if (!verificationId) {
+      setMessage("Verification ID is not set. Please request OTP first.");
+      return;
     }
+
+    const credential = PhoneAuthProvider.credential(verificationId, otp);
+    signInWithCredential(auth, credential) // Use signInWithCredential from 'firebase/auth'
+      .then(() => {
+        setMessage("Phone number verified!");
+      })
+      .catch((error) => {
+        setMessage(`Failed to verify OTP: ${error.message}`);
+      });
   };
 
   if (!user) return null; // Show nothing while loading
 
   return (
-    <div className="profile-container">
-      {/* User Avatar with Initials */}
-      <div className="avatar">
-        <span>{user.displayName ? user.displayName.charAt(0).toUpperCase() : '?'}</span>
-      </div>
-      <h2>{user.displayName || 'User Name'}</h2>
+    <div>
+      <h2>Profile Page</h2>
+      <p>Name: {user.displayName || 'User Name'}</p>
       <p>Email: {user.email || 'Email not available'}</p>
-      <p>Phone: {user.phoneNumber || 'Not linked yet'}</p>
-
-      <form onSubmit={handleSendSMS}>
-        <div className="phone-input">
-          <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)}>
-            <option value="+1">+1 (USA)</option>
-            <option value="+91">+91 (India)</option>
-            <option value="+44">+44 (UK)</option>
-            <option value="+61">+61 (Australia)</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Enter your phone number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Send Verification Code</button>
-      </form>
-
-      <form onSubmit={handleVerifyCode}>
-        <input
-          type="text"
-          placeholder="Enter verification code"
-          value={verificationCode}
-          onChange={(e) => setVerificationCode(e.target.value)}
-          required
-        />
-        <button type="submit">Verify and Link Phone</button>
-      </form>
-
-      {verificationStatus && <p>{verificationStatus}</p>}
-      <div id="recaptcha-container"></div> {/* Recaptcha container */}
+      <input
+        type="text"
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+      />
+      <button onClick={requestOTP}>Request OTP</button>
+      <input
+        type="text"
+        placeholder="OTP"
+        value={otp}
+        onChange={(e) => setOtp(e.target.value)}
+      />
+      <button onClick={verifyOTP}>Verify OTP</button>
+      <div id="recaptcha-container"></div>
+      <p>{message}</p>
     </div>
   );
 };
