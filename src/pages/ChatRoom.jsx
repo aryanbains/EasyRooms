@@ -52,14 +52,6 @@ const ChatRoom = () => {
     fetchFiles();
   }, [roomId]);
 
-  // Upload file to Firebase Storage
-  const uploadFile = async () => {
-    if (!file) return;
-    const storageRef = ref(storage, `chatFiles/${uuidv4()}_${file.name}`);
-    const snapshot = await uploadBytes(storageRef, file);
-    return await getDownloadURL(snapshot.ref);
-  };
-
   // Send a new message or file
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -71,13 +63,16 @@ const ChatRoom = () => {
 
     let fileUrl = '';
     if (file) {
-      fileUrl = await uploadFile();
+      const storageRef = ref(storage, `chatFiles/${uuidv4()}_${file.name}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      fileUrl = await getDownloadURL(snapshot.ref);
       setFile(null);
     }
 
     const messagesRef = collection(db, `rooms/${roomId}/messages`);
     await addDoc(messagesRef, {
-      sender: user.email,
+      sender: user.uid, // Store the user ID
+      username: user.displayName || 'User', // Use displayName from Firebase auth
       content: fileUrl ? `File: ${fileUrl}` : newMessage,
       timestamp: serverTimestamp(),
     });
@@ -92,8 +87,8 @@ const ChatRoom = () => {
       </header>
       <div className="messages">
         {messages.map((msg) => (
-          <div key={msg.id} className={`message ${msg.sender === auth.currentUser.email ? 'sent' : 'received'}`}>
-            <strong>{msg.sender}</strong>:
+          <div key={msg.id} className={`message ${msg.sender === auth.currentUser.uid ? 'sent' : 'received'}`}>
+            <strong>{msg.username || 'User'}</strong>:
             {msg.content.startsWith('File: ') ? (
               <div className="file-preview">
                 <a
