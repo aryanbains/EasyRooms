@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './ChatRoom.css';
 import { useParams } from 'react-router-dom';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from 'firebase/firestore';
@@ -15,6 +15,11 @@ const ChatRoom = () => {
   const [file, setFile] = useState(null);
   const [files, setFiles] = useState([]);
   const [roomName, setRoomName] = useState('');
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   // Fetch room name
   useEffect(() => {
@@ -41,6 +46,10 @@ const ChatRoom = () => {
 
     return unsubscribe;
   }, [roomId]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   // Fetch uploaded files from Firebase Storage
   useEffect(() => {
@@ -107,6 +116,7 @@ const ChatRoom = () => {
             )}
           </div>
         ))}
+        <div ref={messagesEndRef}></div>
       </div>
       <form onSubmit={sendMessage} className="message-input">
         <input
