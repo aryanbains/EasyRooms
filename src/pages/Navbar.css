@@ -1,4 +1,6 @@
 /* Navbar container */
+
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -60,12 +62,18 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     z-index: 1000;
-    display: none; /* Default hidden */
+    opacity: 0; /* Start hidden */
+    visibility: hidden; /* Start hidden */
+    max-height: 0; /* For height animation */
+    transition: opacity 0.3s ease, visibility 0.3s ease, max-height 0.3s ease;
 }
 
 /* Display the dropdown if open */
-.navbar-user:hover .dropdown-menu {
-    display: block;
+.navbar-user:hover .dropdown-menu,
+.navbar-user .dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    max-height: 200px; /* Adjust as necessary */
 }
 
 .dropdown-menu button {
@@ -104,19 +112,20 @@
     .nav-links {
         flex-direction: column; /* Stack links vertically */
         position: absolute;
-        top: 70px; /* Position below the navbar */
+        top: 62px; /* Position below the navbar */
         left: 0;
         right: 0;
         background-color: #2a2a2a;
         display: none; /* Hide by default */
         padding: 15px 0;
+        transition: max-height 0.3s ease; /* Add transition for height */
     }
-
     .nav-links.expanded {
         display: flex; /* Show when expanded */
+        max-height: 500px; /* Adjust as necessary */
     }
-
     .hamburger {
         display: flex; /* Show on mobile */
     }
 }
+

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Rooms.css';
 import { collection, addDoc, query, getDocs, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import Navbar from './Navbar'; // Import the Navbar component
 
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -27,13 +28,11 @@ const Rooms = () => {
         roomName,
         createdAt: serverTimestamp(),
       });
-
       // Update the rooms state with the new room
       setRooms((prevRooms) => [
         ...prevRooms,
         { id: docRef.id, roomName: roomName, createdAt: new Date() },
       ]);
-      
       setRoomName('');
       alert('Room created successfully!');
     } catch (error) {
@@ -47,33 +46,37 @@ const Rooms = () => {
   );
 
   return (
-    <div className="rooms-container">
-      <h2>Discover Rooms</h2>
-      <input
-        type="text"
-        placeholder="Search Rooms..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-bar"
-      />
-      <form onSubmit={createRoom}>
+    <>
+      <Navbar /> {/* Add the Navbar here */}
+      <div className="rooms-container">
+        <h2>Discover Rooms</h2>
         <input
           type="text"
-          placeholder="Room Name"
-          value={roomName}
-          onChange={(e) => setRoomName(e.target.value)}
-          required
+          placeholder="Search Rooms..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
         />
-        <button type="submit">Create Room</button>
-      </form>
-      <ul>
-        {filteredRooms.map((room) => (
-          <li key={room.id}>
-            <a href={`/room/${room.id}`}>{room.roomName}</a>
-          </li>
-        ))}
-      </ul>
-    </div>
+        <form onSubmit={createRoom}>
+          <input
+            type="text"
+            placeholder="Room Name"
+            value={roomName}
+            onChange={(e) => setRoomName(e.target.value)}
+            required
+            className="room-input"
+          />
+          <button type="submit" className="create-room-button">Create Room</button>
+        </form>
+        <ul className="room-list">
+          {filteredRooms.map((room) => (
+            <li key={room.id} className="room-item">
+              <a href={`/room/${room.id}`} className="room-link">{room.roomName}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 
