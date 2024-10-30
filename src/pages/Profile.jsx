@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { auth, storage, db } from "../firebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential, updateProfile } from 'firebase/auth';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage"; // Import deleteObject from firebase/storage
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 import Navbar from "./Navbar";
 import './Profile.css';
+import Uploadicon from '../icons/upload.svg'; // Import the attach icon
+import DefaultAvatar from '../icons/default-avatar.svg'; // Import the default avatar
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -63,6 +65,7 @@ const Profile = () => {
     if (file) {
       setProfileImage(file);
       setImagePreview(URL.createObjectURL(file));
+      document.getElementById('fileName').textContent = file.name;
     }
   };
 
@@ -98,7 +101,7 @@ const Profile = () => {
       <Navbar />
       <div className="profile-container-modern-updated">
         <div className="avatar-modern-updated">
-          <img src={imagePreview || "/default-avatar.png"} alt="Profile" className="avatar-img-modern-updated" />
+          <img src={imagePreview || DefaultAvatar} alt="Profile" className="avatar-img-modern-updated" />
         </div>
         <h2 className="profile-title">Edit Profile</h2>
         <div className="profile-section-updated">
@@ -112,7 +115,18 @@ const Profile = () => {
           <button onClick={updateUsername} className="button-modern-updated">Save Username</button>
         </div>
         <div className="profile-section-updated">
-          <input type="file" onChange={handleProfileImageChange} className="input-modern-updated" />
+          <div className="file-input-container">
+            <input 
+              type="file" 
+              id="profileImage" 
+              onChange={handleProfileImageChange} 
+              className="input-modern-updated" 
+            />
+            <label htmlFor="profileImage" className="custom-file-label">
+              <img src={Uploadicon} alt="Upload" className="upload-icon" /> Choose Profile Image
+            </label>
+          </div>
+          <div id="fileName" className="file-name">No file chosen</div>
           <button onClick={uploadProfileImage} className="button-modern-updated">Upload Profile Image</button>
           <button onClick={removeProfileImage} className="button-modern-updated">Remove Profile Image</button>
         </div>
