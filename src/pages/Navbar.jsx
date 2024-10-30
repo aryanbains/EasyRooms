@@ -43,6 +43,7 @@ const Navbar = () => {
             </button>
             {isDropdownOpen && ( // Conditionally render dropdown
               <div className="dropdown-menu">
+                <button onClick={() => navigate('/dashboard')}>Dashboard</button>
                 <button onClick={handleLogout}>Logout</button>
               </div>
             )}

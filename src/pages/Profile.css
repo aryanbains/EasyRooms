@@ -1,65 +1,91 @@
-* {
-    box-sizing: border-box;
-}
-
-.profile-container {
-    max-width: 400px;
+/* General styles for the Profile component */
+  
+  .profile-container-modern-updated {
+    max-width: 600px;
     margin: 5rem auto;
     padding: 2rem;
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    text-align: center; /* Center-align content */
-}
-
-.avatar {
-    width: 100px;
-    height: 100px;
-    background-color: #ff6347; /* Avatar background color */
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .profile-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .avatar-modern-updated {
+    width: 150px;
+    height: 150px;
+    background-color: #ff6347;
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem; /* Initials font size */
-    margin: 0 auto 1rem; /* Center the avatar and add bottom margin */
-}
-
-h2 {
-    margin-bottom: 1rem;
-}
-
-input {
-    padding: 10px;
-    margin: 0.5rem 0; /* Space between input and button */
+    font-size: 3.5rem;
+    margin: 0 auto 1.5rem;
+    border: 4px solid #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatar-img-modern-updated {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .input-modern-updated {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 1.5rem;
     border: 2px solid #ddd;
     border-radius: 5px;
-    width: calc(100% - 22px); /* Full width with padding */
-}
-
-button {
-    padding: 10px 20px;
+    font-size: 1.2rem;
+    transition: border 0.3s ease;
+  }
+  
+  .input-modern-updated:focus {
+    border-color: #ff6347;
+    outline: none;
+  }
+  
+  .button-modern-updated {
+    padding: 15px 30px;
     background-color: #ff6347;
     color: white;
     border: none;
     border-radius: 5px;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #e5533d;
-}
-
-p {
-    margin-top: 1rem; /* Space above status message */
-}
-.phone-input {
-    display: flex;
-    align-items: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 1.5rem;
   }
   
-  .phone-input select {
-    margin-right: 8px; /* Space between dropdown and input */
+  .button-modern-updated:hover {
+    background-color: #e5533d;
+    transform: scale(1.05);
+  }
+  
+  .profile-section-updated {
+    margin-bottom: 2rem;
+  }
+  
+  .message-modern-updated {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  /* Add this to your Profile.css */
+/* Add this to your Profile.css */
+
+.button-modern-updated {
+    margin-right: 10px; /* Add some space to the right */
   }
   

@@ -66,16 +66,15 @@ const ChatRoom = () => {
       const storageRef = ref(storage, `chatFiles/${uuidv4()}_${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on('state_changed', 
+      uploadTask.on('state_changed',
         (snapshot) => {
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(2);
           setUploadProgress(progress);
-          console.log('Upload is ' + progress + '% done');
-        }, 
+        },
         (error) => {
           console.log('Upload error: ', error);
-        }, 
+        },
         async () => {
           // Upload completed successfully, now we can get the download URL
           fileUrl = await getDownloadURL(uploadTask.snapshot.ref);
@@ -142,8 +141,8 @@ const ChatRoom = () => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
-        <label htmlFor="file-input">
-          <img src={attachIcon} alt="Attach" style={{ cursor: 'pointer' }} />
+        <label htmlFor="file-input" className="icon-button">
+          <img src={attachIcon} alt="Attach" />
         </label>
         <input
           type="file"
@@ -151,8 +150,8 @@ const ChatRoom = () => {
           style={{ display: 'none' }}
           onChange={(e) => setFile(e.target.files[0])}
         />
-        {file && <div>Uploading: {uploadProgress}%</div>}
-        <button type="submit">
+        {file && <div className="upload-progress">Uploading: {uploadProgress}%</div>}
+        <button type="submit" className="icon-button">
           <img src={sendIcon} alt="Send" />
         </button>
       </form>
