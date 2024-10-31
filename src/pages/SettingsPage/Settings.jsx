@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Settings.css';
-import Navbar from './Navbar'; // Import Navbar component
+import Navbar from '../Navbar'; // Import Navbar component
 
 const Settings = () => {
   const [email, setEmail] = useState('');

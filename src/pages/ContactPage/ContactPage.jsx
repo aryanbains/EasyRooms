@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Navbar from '../Navbar';
+import Navbar from '../../Navbar';
 import './ContactPage.css';
-import { db } from '../../firebaseConfig'; // Adjust the import path as needed
+import { db } from '../../../firebaseConfig'; // Adjust the import path as needed
 import { collection, addDoc } from 'firebase/firestore';
 
 const ContactPage = () => {

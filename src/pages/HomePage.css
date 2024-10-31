@@ -81,24 +81,20 @@ body {
   .hero-section h1 {
       font-size: 2.5rem;
   }
-
   .hero-section p {
       font-size: 1rem;
       margin-bottom: 1.5rem;
   }
-
   .btn-primary {
       padding: 8px 16px;
   }
-
   .features-container {
-      flex-direction: column; /* Stack features vertically */
-      align-items: center; /* Center features */
+      flex-direction: column;
+      align-items: center;
   }
-
   .feature {
-      width: 80%; /* Take up more width on smaller screens */
-      margin-bottom: 1rem; /* Add spacing between features */
+      width: 80%;
+      margin-bottom: 1rem;
   }
 }
 
@@ -106,12 +102,10 @@ body {
   .hero-section h1 {
       font-size: 2rem;
   }
-
   .hero-section p {
       font-size: 0.9rem;
   }
-
   .features-container {
-      margin-top: 1rem; /* Reduce spacing for small screens */
+      margin-top: 1rem;
   }
 }

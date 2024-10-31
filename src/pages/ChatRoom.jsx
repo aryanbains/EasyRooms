@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ChatRoom.css';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, doc, getDoc } from 'firebase/firestore';
 import { db, storage, auth } from '../firebaseConfig';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-import sendIcon from '../icons/send.svg'; // Import the send icon
-import attachIcon from '../icons/attach.svg'; // Import the attach icon
+import sendIcon from '../icons/send.svg';
+import attachIcon from '../icons/attach.svg';
+import infoIcon from '../icons/info.svg'; // Import the info icon
 
 const ChatRoom = () => {
   const { roomId } = useParams();
@@ -21,7 +22,6 @@ const ChatRoom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Fetch room name
   useEffect(() => {
     const fetchRoomName = async () => {
       const roomDoc = await getDoc(doc(db, 'rooms', roomId));
@@ -32,7 +32,6 @@ const ChatRoom = () => {
     fetchRoomName();
   }, [roomId]);
 
-  // Fetch and listen to messages in real-time
   useEffect(() => {
     const messagesRef = collection(db, `rooms/${roomId}/messages`);
     const q = query(messagesRef, orderBy('timestamp'));
@@ -50,7 +49,6 @@ const ChatRoom = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Send a new message or file
   const sendMessage = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -58,17 +56,13 @@ const ChatRoom = () => {
       alert('Please login to send messages.');
       return;
     }
-
     let fileUrl = '';
     let fileType = '';
-
     if (file) {
       const storageRef = ref(storage, `chatFiles/${uuidv4()}_${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
-
       uploadTask.on('state_changed',
         (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(2);
           setUploadProgress(progress);
         },
@@ -76,19 +70,16 @@ const ChatRoom = () => {
           console.log('Upload error: ', error);
         },
         async () => {
-          // Upload completed successfully, now we can get the download URL
           fileUrl = await getDownloadURL(uploadTask.snapshot.ref);
           fileType = file.type.startsWith('image') ? 'image' : file.type.startsWith('video') ? 'video' : 'file';
-
           const messagesRef = collection(db, `rooms/${roomId}/messages`);
           await addDoc(messagesRef, {
-            sender: user.uid, // Store the user ID
-            username: user.displayName || 'User', // Use displayName from Firebase auth
+            sender: user.uid,
+            username: user.displayName || 'User',
             content: fileUrl,
             fileType: fileType,
             timestamp: serverTimestamp(),
           });
-
           setFile(null);
           setUploadProgress(0);
         }
@@ -96,14 +87,13 @@ const ChatRoom = () => {
     } else {
       const messagesRef = collection(db, `rooms/${roomId}/messages`);
       await addDoc(messagesRef, {
-        sender: user.uid, // Store the user ID
-        username: user.displayName || 'User', // Use displayName from Firebase auth
+        sender: user.uid,
+        username: user.displayName || 'User',
         content: newMessage,
         fileType: 'text',
         timestamp: serverTimestamp(),
       });
     }
-
     setNewMessage('');
   };
 
@@ -111,6 +101,9 @@ const ChatRoom = () => {
     <div className="chatroom-container">
       <header className="chatroom-header">
         <h2>{roomName}</h2>
+        <Link to={`/roominfo/${roomId}`} className="icon-button">
+          <img src={infoIcon} alt="Room Info" />
+        </Link>
       </header>
       <div className="messages">
         {messages.map((msg) => (

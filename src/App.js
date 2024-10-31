@@ -7,10 +7,10 @@ import ChatRoom from './pages/ChatRoom.jsx';
 import HomePage from './pages/HomePage'; // Import HomePage
 import Admin from './pages/AdminPage/Admin.jsx';
 import ForgotPassword from './pages/ForgotPassword';
-import Profile from './pages/Profile.jsx';
-import Settings from './pages/Settings.jsx';
-import ContactPage from './pages/ContactPage/ContactPage.jsx';
-
+import Profile from './pages/ProfilePage/Profile.jsx';
+import Settings from './pages/SettingsPage/Settings.jsx';
+import ContactPage from './pages/ProfilePage/ContactPage/ContactPage.jsx';
+import RoomInfo from './pages/RoomInfoPage/RoomInfo.jsx';
 
 
 function App() {
@@ -28,6 +28,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/roominfo/:roomId" component={RoomInfo} />
 
       </Routes>
     </Router>

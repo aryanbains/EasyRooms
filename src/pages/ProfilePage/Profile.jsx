@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { auth, storage, db } from "../firebaseConfig";
+import { auth, storage, db } from "../../firebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential, updateProfile } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import './Profile.css';
-import Uploadicon from '../icons/upload.svg'; // Import the attach icon
-import DefaultAvatar from '../icons/default-avatar.svg'; // Import the default avatar
+import Uploadicon from '../../icons/upload.svg'// Import the attach icon
+import DefaultAvatar from '../../icons/default-avatar.svg'; // Import the default avatar
 
 const Profile = () => {
   const navigate = useNavigate();

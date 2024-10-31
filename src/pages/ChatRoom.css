@@ -1,4 +1,3 @@
-/* General styles */
 .chatroom-container {
   display: flex;
   flex-direction: column;
@@ -10,7 +9,9 @@
 }
 
 .chatroom-header {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 20px;
   background-color: #007bff;
   color: white;
