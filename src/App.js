@@ -29,8 +29,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="/roominfo/:roomId" component={RoomInfo} />
-
+        <Route path="/roominfo/:roomId" element={<RoomInfo />} /> {/* Add this line */}
       </Routes>
     </Router>
   );

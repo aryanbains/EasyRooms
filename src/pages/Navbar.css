@@ -15,8 +15,18 @@
 }
 
 .navbar-logo {
-    color: white;
+  color: white; /* Ensure it matches the rest of the navbar */
+  text-decoration: none; /* Remove underline */
+  font-size: 1.5rem; /* Adjust size if needed */
+  border: none; /* No border */
 }
+
+.navbar-logo:hover {
+  background-color: transparent; /* No background change on hover */
+  color: white; /* Keep the text color the same on hover */
+  text-decoration: none; /* Ensure no underline on hover */
+}
+
 
 /* Navbar links */
 .nav-links {

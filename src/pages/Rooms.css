@@ -1,108 +1,162 @@
-/* Scoped styles for Rooms component */
+/* General styles */
 .rooms-container * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif; /* Modern font */
+  font-family: 'Arial', sans-serif;
 }
 
 .rooms-container {
-  max-width: 1200px; /* Increase max width for better layout */
-  margin: 5rem auto; /* Center the container on the page */
+  max-width: 1200px;
+  margin: 5rem auto;
   padding: 2rem;
-  background: #f5f5f5; /* Light grey background */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Soft shadow effect */
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .rooms-container h2 {
-  text-align: center; /* Center the heading */
-  margin-bottom: 2rem; /* Space below the heading */
-  color: #333; /* Dark text color for contrast */
-  font-size: 2.5rem; /* Larger font size for the heading */
-  font-weight: bold; /* Bold font for the heading */
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
 .rooms-container .search-bar {
-  width: 100%; /* Full width for the search bar */
+  width: 100%;
   padding: 15px;
-  margin-bottom: 2rem; /* Space below the search bar */
-  border: 2px solid #ddd; /* Light border */
-  border-radius: 5px; /* Rounded corners */
-  font-size: 1.2rem; /* Font size for search bar */
+  margin-bottom: 2rem;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.2rem;
 }
 
 .rooms-container form {
   display: flex;
-  justify-content: center; /* Center the form elements */
-  margin-bottom: 2rem; /* Space below the form */
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .rooms-container .room-input {
   padding: 15px;
-  margin-right: 1rem; /* Space between input and button */
-  border: 2px solid #ddd; /* Light border around input */
-  border-radius: 5px; /* Rounded corners for input */
-  font-size: 1.2rem; /* Font size for input */
-  flex: 1; /* Make the input take available space */
+  margin-right: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  flex: 1;
 }
 
 .rooms-container .room-input:focus {
-  border-color: #ff6347; /* Change border color on focus */
-  outline: none; /* Remove outline */
+  border-color: #ff6347;
+  outline: none;
 }
 
 .rooms-container .create-room-button {
-  padding: 15px 30px; /* Increase padding for better appearance */
-  background-color: #ff6347; /* Primary button color */
-  margin-top: 15px;
-  color: white; /* Text color for the button */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners for the button */
-  font-size: 1.2rem; /* Button font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+  padding: 15px 30px;
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .rooms-container .create-room-button:hover {
-  background-color: #e5533d; /* Darker shade on hover */
-  transform: scale(1.05); /* Slightly enlarge button on hover */
+  background-color: #e5533d;
+  transform: scale(1.05);
 }
 
 .rooms-container ul.room-list {
-  list-style: none; /* Remove default list styling */
-  padding: 0; /* Remove padding */
-  display: flex; /* Align items in a row */
-  flex-wrap: wrap; /* Wrap items to the next line if needed */
-  gap: 1.5rem; /* Space between items */
-  justify-content: center; /* Center the items */
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
 }
 
 .rooms-container .room-item {
-  background: white; /* White background for the room item */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  border-radius: 10px; /* Rounded corners */
-  padding: 1rem; /* Padding inside the room item */
-  width: 280px; /* Fixed width for each room item */
-  text-align: center; /* Center-align text */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 280px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .rooms-container .room-item:hover {
-  transform: translateY(-10px); /* Lift the room item on hover */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .rooms-container .room-link {
-  text-decoration: none; /* Remove underline from links */
-  color: #ff6347; /* Link color to match theme */
-  font-size: 1.5rem; /* Font size for the room name */
-  font-weight: bold; /* Bold text */
-  display: block; /* Make the link a block element */
-  padding: 1rem 0; /* Padding for clickable area */
-  transition: color 0.3s; /* Smooth transition for color */
+  text-decoration: none;
+  color: #ff6347;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: block;
+  padding: 1rem 0;
+  transition: color 0.3s;
 }
 
 .rooms-container .room-link:hover {
-  color: #e5533d; /* Change color on hover */
+  color: #e5533d;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 500px;
+  max-width: 90%;
+  text-align: center;
+  position: relative;
+}
+
+.modal-content .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ff6347;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content input,
+.modal-content textarea {
+  margin-bottom: 1rem;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  border-color: #ff6347;
+  outline: none;
 }

@@ -7,8 +7,8 @@ import './Navbar.css';
 const Navbar = () => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown visibility
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu visibility
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
     auth.signOut();
@@ -16,16 +16,18 @@ const Navbar = () => {
   };
 
   const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev); // Toggle the dropdown
+    setIsDropdownOpen((prev) => !prev);
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev); // Toggle the mobile menu
+    setIsMenuOpen((prev) => !prev);
   };
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-logo">EasyRooms</h1>
+      <Link to="/" className="navbar-logo">
+        EasyRooms
+      </Link>
       <div className="hamburger" onClick={toggleMenu}>
         <div></div>
         <div></div>
@@ -41,7 +43,7 @@ const Navbar = () => {
             <button className="user-button" onClick={toggleDropdown}>
               {user.displayName || 'User'}
             </button>
-            {isDropdownOpen && ( // Conditionally render dropdown
+            {isDropdownOpen && (
               <div className="dropdown-menu">
                 <button onClick={() => navigate('/dashboard')}>Dashboard</button>
                 <button onClick={handleLogout}>Logout</button>
