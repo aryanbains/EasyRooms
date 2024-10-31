@@ -30,7 +30,7 @@ const HomePage = () => {
       <header className="hero-section">
         <h1>Welcome to EasyRooms</h1>
         <p>Connect, share, and communicate with your friends effortlessly.</p>
-        <a href="#features" className="btn-primary">Get Started</a>
+        <a href="/signup" className="btn-primary">Get Started</a>
       </header>
       <section id="features" className="features-section">
         <h2>Features</h2>
