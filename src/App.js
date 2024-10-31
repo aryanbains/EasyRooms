@@ -5,10 +5,11 @@ import Dashboard from './pages/Dashboard.jsx';
 import Rooms from './pages/Rooms.jsx';
 import ChatRoom from './pages/ChatRoom.jsx';
 import HomePage from './pages/HomePage'; // Import HomePage
-import Admin from './pages/Admin.jsx';
+import Admin from './pages/AdminPage/Admin.jsx';
 import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile.jsx';
 import Settings from './pages/Settings.jsx';
+import ContactPage from './pages/ContactPage/ContactPage.jsx';
 
 
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/contact" element={<ContactPage />} />
 
       </Routes>
     </Router>
