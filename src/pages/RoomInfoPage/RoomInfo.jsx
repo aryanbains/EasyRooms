@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../firebaseConfig';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, getDocs } from 'firebase/firestore';
 import './RoomInfo.css';
 
 const RoomInfo = () => {
   const { roomId } = useParams();
   const [roomInfo, setRoomInfo] = useState(null);
+  const [members, setMembers] = useState([]);
+  const [usernames, setUsernames] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +21,37 @@ const RoomInfo = () => {
         console.error('Room not found');
       }
     };
+
+    const fetchMembers = async () => {
+      const messagesRef = collection(db, `rooms/${roomId}/messages`);
+      const q = query(messagesRef);
+      const querySnapshot = await getDocs(q);
+      const membersSet = new Set();
+      querySnapshot.forEach((doc) => {
+        const messageData = doc.data();
+        membersSet.add(messageData.sender);
+      });
+      const membersArray = Array.from(membersSet);
+      setMembers(membersArray);
+      await fetchUsernames(membersArray);
+    };
+
+    const fetchUsernames = async (members) => {
+      const usernamesMap = {};
+      for (const member of members) {
+        const userDoc = doc(db, 'users', member);
+        const userData = await getDoc(userDoc);
+        if (userData.exists()) {
+          usernamesMap[member] = userData.data().displayName || 'Unknown';
+        } else {
+          usernamesMap[member] = 'Unknown';
+        }
+      }
+      setUsernames(usernamesMap);
+    };
+
     fetchRoomInfo();
+    fetchMembers();
   }, [roomId]);
 
   if (!roomInfo) return <div>Loading...</div>;
@@ -35,9 +67,9 @@ const RoomInfo = () => {
       <div className="room-members">
         <h3>Members</h3>
         <ul>
-          {roomInfo.members ? (
-            roomInfo.members.map((member, index) => (
-              <li key={index}>{member}</li>
+          {members.length > 0 ? (
+            members.map((member, index) => (
+              <li key={index}>{usernames[member] || 'Unknown'}</li>
             ))
           ) : (
             <li>No members available</li>

@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import './Signup.css';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import { auth, db } from '../../firebaseConfig';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState(''); // New state for username
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -15,12 +16,19 @@ const Signup = () => {
     e.preventDefault();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-      // Update the user's profile with the username
       await updateProfile(userCredential.user, { displayName: username });
 
-      console.log('User registered and profile updated');
-      navigate('/dashboard'); // Redirect to dashboard after signup
+      // Save user data to Firestore
+      const userRef = doc(db, 'users', userCredential.user.uid);
+      await setDoc(userRef, {
+        uid: userCredential.user.uid,
+        email: email,
+        displayName: username,
+        createdAt: new Date().toISOString()
+      });
+
+      console.log('User registered, profile updated, and user saved to Firestore');
+      navigate('/dashboard');
     } catch (error) {
       console.error('Error creating account:', error);
       setError('Error creating account. Please try again.');
