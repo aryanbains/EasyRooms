@@ -9,7 +9,7 @@ import Admin from './pages/AdminPage/Admin.jsx';
 import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/ProfilePage/Profile.jsx';
 import Settings from './pages/SettingsPage/Settings.jsx';
-import ContactPage from './pages/ProfilePage/ContactPage/ContactPage.jsx';
+import ContactPage from './pages/ContactPage/ContactPage.jsx';
 import RoomInfo from './pages/RoomInfoPage/RoomInfo.jsx';
 
 
