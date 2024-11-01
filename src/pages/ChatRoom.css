@@ -108,3 +108,9 @@
   font-size: 14px;
   color: #007bff;
 }
+
+.typing-indicator {
+  padding: 10px;
+  color: gray;
+  font-style: italic;
+}
