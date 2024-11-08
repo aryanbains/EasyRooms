@@ -43,30 +43,52 @@ body {
   background-color: #e5533d;
 }
 
-.features-section {
+.features-section, .about-section, .testimonials-section, .invite-section {
   padding: 2rem;
   text-align: center;
-}
-
-.features-container {
-  display: flex;
-  justify-content: space-around;
+  background-color: #fff;
   margin-top: 2rem;
 }
 
-.feature {
+.features-container, .testimonials-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.feature, .testimonial {
   background: white;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px;
   width: 30%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px;
 }
 
-.about-section {
-  padding: 2rem;
-  text-align: center;
-  background-color: #fff;
+.testimonial p {
+  font-style: italic;
+}
+
+.testimonial h4 {
+  margin-top: 10px;
+  font-weight: normal;
+}
+
+.invite-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.invite-form input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 .footer {
@@ -79,33 +101,43 @@ body {
 /* Responsive Styles */
 @media (max-width: 768px) {
   .hero-section h1 {
-      font-size: 2.5rem;
+    font-size: 2.5rem;
   }
   .hero-section p {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
   }
   .btn-primary {
-      padding: 8px 16px;
+    padding: 8px 16px;
   }
-  .features-container {
-      flex-direction: column;
-      align-items: center;
+  .features-container, .testimonials-container {
+    flex-direction: column;
+    align-items: center;
   }
-  .feature {
-      width: 80%;
-      margin-bottom: 1rem;
+  .feature, .testimonial {
+    width: 80%;
+    margin-bottom: 1rem;
+  }
+  .invite-form {
+    flex-direction: column;
+  }
+  .invite-form input {
+    margin-bottom: 10px;
+    margin-right: 0;
   }
 }
 
 @media (max-width: 480px) {
   .hero-section h1 {
-      font-size: 2rem;
+    font-size: 2rem;
   }
   .hero-section p {
-      font-size: 0.9rem;
+    font-size: 0.9rem;
   }
-  .features-container {
-      margin-top: 1rem;
+  .features-container, .testimonials-container {
+    margin-top: 1rem;
+  }
+  .invite-form {
+    flex-direction: column;
   }
 }
