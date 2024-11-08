@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-import './ForgotPassword.css'; // Optional: Create a CSS file for styling
+import './ForgotPassword.css'; // Updated CSS file name
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="forgot-password-container">
+    <div className="forgot-password-page-container">
       <h2>Forgot Password</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -34,8 +34,8 @@ const ForgotPassword = () => {
         />
         <button type="submit">Send Reset Link</button>
       </form>
-      {message && <p className="success-message">{message}</p>}
-      {error && <p className="error-message">{error}</p>}
+      {message && <p className="forgot-password-success-message">{message}</p>}
+      {error && <p className="forgot-password-error-message">{error}</p>}
     </div>
   );
 };

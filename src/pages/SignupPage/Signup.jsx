@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Signup.css';
+import './Signup.css'; // Updated CSS file name
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../../firebaseConfig';
@@ -36,7 +36,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
+    <div className="signup-page-container">
       <h2>Signup</h2>
       <form onSubmit={handleSignup}>
         <input
@@ -61,7 +61,7 @@ const Signup = () => {
           required
         />
         <button type="submit">Signup</button>
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="signup-error-message">{error}</p>}
       </form>
       <p>
         Already have an account? <a href="/login">Login</a>
