@@ -40,15 +40,19 @@ const HomePage = () => {
       from_email: 'noreply@easyrooms.com',
     };
 
-    emailjs.send('service_wmqnqxe', 'template_7th8a0x', templateParams, '20yyigirgjvEbx0n2')
-      .then((response) => {
-        console.log('Email sent successfully!', response.status, response.text);
-        alert(`Invitation sent to ${email}`);
-        setEmail('');
-      }, (error) => {
-        console.log('Failed to send email.', error);
-        alert('Failed to send the invitation. Please try again.');
-      });
+    emailjs.send(
+      process.env.REACT_APP_EMAILJS_SERVICE_ID,
+      process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+      templateParams,
+      process.env.REACT_APP_EMAILJS_USER_ID
+    ).then((response) => {
+      console.log('Email sent successfully!', response.status, response.text);
+      alert(`Invitation sent to ${email}`);
+      setEmail('');
+    }, (error) => {
+      console.log('Failed to send email.', error);
+      alert('Failed to send the invitation. Please try again.');
+    });
   };
 
   return (
