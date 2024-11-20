@@ -12,6 +12,7 @@ import Settings from './pages/SettingsPage/Settings.jsx';
 import ContactPage from './pages/ContactPage/ContactPage.jsx';
 import RoomInfo from './pages/RoomInfoPage/RoomInfo.jsx';
 import DMPage from './pages/DMPage/dmpage.jsx';
+import PDFViewer from './pages/pdfpage.jsx';
 
 
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/dmpage" element={<DMPage />} />
+        <Route path="/pdf" element={<PDFViewer />} />
         <Route path="/roominfo/:roomId" element={<RoomInfo />} /> {/* Add this line */}
       </Routes>
     </Router>
